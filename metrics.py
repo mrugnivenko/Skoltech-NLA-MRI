@@ -51,4 +51,3 @@ def qrcm(img1, img2):
     else:
         QRCM = (1 + RCM) * Q - 1
     return QRCM
-`

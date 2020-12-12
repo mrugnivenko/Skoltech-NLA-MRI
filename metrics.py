@@ -1,7 +1,7 @@
 import numpy
 import math
 from scipy.ndimage import convolve
-
+# TODO 4 more metrics
 
 '''
 Measure of Peak Signal-to-Noise Ratio (PSNR) [22] measures the ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of its representation. In Fig. 5-a), while the value of (μ) is 0.65, PSNR value of proposed method is the highest as compared to the other methods and it is up to 12 dB. This involves better quality of the image as well as best noise reduction.

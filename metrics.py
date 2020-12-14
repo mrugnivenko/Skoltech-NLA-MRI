@@ -1,16 +1,18 @@
-<<<<<<< HEAD
 import numpy
-=======
 import numpy as np
->>>>>>> 05220a174ee70a1c0537a9229158432fb8fffbe2
 import math
 from scipy.ndimage import convolve
 # TODO 4 more metrics
 
-'''
-Measure of Peak Signal-to-Noise Ratio (PSNR) [22] measures the ratio between the maximum possible value of a signal and the power of distorting noise that affects the quality of its representation. In Fig. 5-a), while the value of (μ) is 0.65, PSNR value of proposed method is the highest as compared to the other methods and it is up to 12 dB. This involves better quality of the image as well as best noise reduction.
-'''
+
 def psnr(img1, img2):
+    """
+    Measure of Peak Signal-to-Noise Ratio (PSNR) [22] measures the ratio between the maximum possible value of a signal
+    and the power of distorting noise that affects the quality of its representation. In Fig. 5-a), while the value of (μ)
+    is 0.65, PSNR value of proposed method is the highest as compared to the other methods and it is up to 12 dB.
+    This involves better quality of the image as well as best noise reduction.
+    """
+
     img1 = (img1 - img1.min())/(img1.max() - img1.min())
     img2 = (img2 - img2.min())/(img2.max() - img2.min())
     mse = np.mean( (img1 - img2) ** 2 )
@@ -20,10 +22,17 @@ def psnr(img1, img2):
     return 20 * math.log10(PIXEL_MAX / math.sqrt(mse))
 
 
-'''
-Measure of Quality-aware Relative Contrast Measure (QRCM) [23] gives idea about contrast measure and image quality together. QRCM penalizes the contrast changes when there is a significant difference between the gradients of original and enhanced images. This is happened generally when there are visual distortions on the processed image. Thus, QRCM does not only measure the relative change of contrast but also takes the distortion introduced on the enhanced image relative to the considered original image. Negative QRCM values indicate that considered contrast enhancement algorithm distorted enhanced image as comparing to the original one.
-'''
+
 def qrcm(img1, img2):
+    """
+    Measure of Quality-aware Relative Contrast Measure (QRCM) [23] gives idea about contrast measure and image quality
+    together. QRCM penalizes the contrast changes when there is a significant difference between the gradients of
+    original and enhanced images. This is happened generally when there are visual distortions on the processed image.
+    Thus, QRCM does not only measure the relative change of contrast but also takes the distortion introduced on the
+    enhanced image relative to the considered original image.
+    Negative QRCM values indicate that considered contrast enhancement algorithm distorted enhanced image
+     as comparing to the original one.
+    """
     eps = 1e-8
     img1 = (img1 - img1.min())/(img1.max() - img1.min()) * 255
     img2 = (img2 - img2.min())/(img2.max() - img2.min()) * 255
@@ -54,8 +63,4 @@ def qrcm(img1, img2):
         QRCM = RCM * Q
     else:
         QRCM = (1 + RCM) * Q - 1
-<<<<<<< HEAD
     return QRCM
-=======
-    return QRCM
->>>>>>> 05220a174ee70a1c0537a9229158432fb8fffbe2

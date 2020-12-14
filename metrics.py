@@ -38,8 +38,8 @@ def qrcm(img1, img2):
     img2 = (img2 - img2.min())/(img2.max() - img2.min()) * 255
     
     kernel_average = 1 / 9 * np.ones((3, 3))
-    kernel_x = np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype='float32')
-    kernel_y = np.array([[1, 1, 1], [0, 0, 0], [-1, -1, -1]], dtype='float32')
+    kernel_x = 1 / 3 * np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype='float32')
+    kernel_y = 1 / 3 * np.array([[1, 1, 1], [0, 0, 0], [-1, -1, -1]], dtype='float32')
     
     img1 = convolve(img1, kernel_average)
     grad_x = convolve(img1, kernel_x) 
@@ -64,3 +64,27 @@ def qrcm(img1, img2):
     else:
         QRCM = (1 + RCM) * Q - 1
     return QRCM
+
+def ssim(img1_orig, img2_orig):
+    """
+    Structure similarity index measurement (SSIM) [24] is a metric based on 
+    measuring the similarity between two images. The SSIM can take values in  
+    range. Higher value suggests the better preservation of image structures. 
+    """
+    img1_orig = (img1_orig - img1_orig.min())/(img1_orig.max() - img1_orig.min()) * 255
+    img2_orig = (img2_orig - img2_orig.min())/(img2_orig.max() - img2_orig.min()) * 255
+    res = np.zeros(((img1_orig.shape[0]//8), (img1_orig.shape[1]//8)))
+    for i in range(img1_orig.shape[0]//8):
+        for j in range(img1_orig.shape[1]//8):
+            img1 = img1_orig[8*i:8*(i+1), 8*j:8*(j+1)]
+            img2 = img2_orig[8*i:8*(i+1), 8*j:8*(j+1)]            
+            mu_x = img1.mean()
+            mu_y = img2.mean() 
+            sigma_x = img1.std()
+            sigma_y = img2.std()
+            sigma_xy = 1/img1.size*(((img1-img1.mean())*(img2-img2.mean())).sum())
+            L = 255
+            c1 = (0.01*L)**2
+            c2 = (0.03*L)**2
+            res[i, j] = ((2*mu_x*mu_y + c1)*(2*sigma_xy + c2))/((mu_x**2 + mu_y**2 + c1)*(sigma_x**2 + sigma_y**2 + c2))
+    return res.mean()

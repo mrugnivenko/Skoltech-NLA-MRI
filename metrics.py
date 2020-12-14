@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import numpy
+=======
+import numpy as np
+>>>>>>> 05220a174ee70a1c0537a9229158432fb8fffbe2
 import math
 from scipy.ndimage import convolve
 # TODO 4 more metrics
@@ -50,4 +54,8 @@ def qrcm(img1, img2):
         QRCM = RCM * Q
     else:
         QRCM = (1 + RCM) * Q - 1
+<<<<<<< HEAD
     return QRCM
+=======
+    return QRCM
+>>>>>>> 05220a174ee70a1c0537a9229158432fb8fffbe2

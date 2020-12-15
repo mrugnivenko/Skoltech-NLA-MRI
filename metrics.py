@@ -88,3 +88,18 @@ def ssim(img1_orig, img2_orig):
             c2 = (0.03*L)**2
             res[i, j] = ((2*mu_x*mu_y + c1)*(2*sigma_xy + c2))/((mu_x**2 + mu_y**2 + c1)*(sigma_x**2 + sigma_y**2 + c2))
     return res.mean()
+
+def EME(image, k1 = 4, k2 = 4): 
+    image = image.astype('float64')
+    if image.min() == 0:
+        image += 0.01
+        image = image/image.max()
+    result = 0
+    block_i_size = image.shape[0]//k1
+    block_j_size = image.shape[1]//k2
+    
+    for i in range(k1):
+        for j in range(k2):
+            block = image[i*block_i_size:(i+1)*block_i_size, j*block_j_size:(j+1)*block_j_size]
+            result += 20*np.log(block.max()/block.min())
+    return result/(k1*k2)

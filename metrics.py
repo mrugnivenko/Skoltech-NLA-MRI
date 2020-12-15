@@ -103,3 +103,6 @@ def EME(image, k1 = 4, k2 = 4):
             block = image[i*block_i_size:(i+1)*block_i_size, j*block_j_size:(j+1)*block_j_size]
             result += 20*np.log(block.max()/block.min())
     return result/(k1*k2)
+
+def AMBE(img1,img2):
+    return abs(np.mean(img1)-np.mean(img2))
